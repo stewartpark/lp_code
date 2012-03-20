@@ -24,7 +24,8 @@ support_ext=( \
             )
 arg=$1
 if [ -z "$arg" ]; then
-    arg=.
+    print_help ;
+    exit
 fi
 
 if [ -e "$arg" ]; then 

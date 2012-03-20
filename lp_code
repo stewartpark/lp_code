@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+
+print_help (){
+    echo "$0 [path or file of the source code]"
+    echo "http://github.com/interuptz/lp_code"
+}
+
+# Supported file extensions
+support_ext=( \
+                "\.c$" "c" \
+                "\.h$" "h" \
+                "\.cpp$" "cpp" \
+                "\.hpp$" "cpp" \
+                "\.js$" "javascript" \
+            )
+arg=$1
+if [ -z "$arg" ]; then
+    arg=.
+fi
+
+if [ -z "$arg" ]; then
+    print_help ;
+    echo "$arg is not valid path or source.";
+    exit
+fi
+
+for (( i=0; i<${#support_ext[@]}; i+=2 ));
+    do
+        enscript --color --line-numbers --word-wrap --landscape --columns=2 --mark-wrapped-lines=arrow -p - -E ${support_ext[i+1]} `find $arg | grep ${support_ext[i]}` | lp -o sides=two-sided-short-edge -
+done
+
